@@ -49,14 +49,7 @@ namespace Resgrid.ApiLoadTester.Workers
 			RC.WriteLine(ConsoleColorExt.Yellow, string.Format("Average Operation: {0}", (_averageTime / (setting.Threads * setting.Iterations))));
 
 			RC.WriteLine(ConsoleColorExt.Yellow, string.Format("Total Operation Time: {0}ms/{1}m", masterSW.ElapsedMilliseconds, TimeSpan.FromMilliseconds(masterSW.ElapsedMilliseconds).TotalMinutes.ToString("F")));
-
-
-			RC.WriteLine(ConsoleColorExt.Black, string.Format("##teamcity[SuccessfulApiCalls '{0}']", _successes));
-			RC.WriteLine(ConsoleColorExt.Black, string.Format("##teamcity[FailedApiCalls '{0}']", _failures));
-			RC.WriteLine(ConsoleColorExt.Black, string.Format("##teamcity[QuickestApiCall '{0}']", _minRequestTime));
-			RC.WriteLine(ConsoleColorExt.Black, string.Format("##teamcity[SlowestApiCall '{0}']", _maxRequestTime));
-			RC.WriteLine(ConsoleColorExt.Black, string.Format("##teamcity[AverageApiCall '{0}']", (_averageTime / (setting.Threads * setting.Iterations))));
-			RC.WriteLine(ConsoleColorExt.Black, string.Format("##teamcity[TotalTime '{0}']", masterSW.ElapsedMilliseconds));
+			RC.WriteLine(ConsoleColorExt.Yellow, string.Format("Number of requests per second: {0}/s", decimal.Divide((_successes + _failures), masterSW.Elapsed.Seconds)));
 		}
 
 		private static void LoadTestWorker(LoadTestSetting setting, int threadId)
